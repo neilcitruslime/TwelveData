@@ -1,8 +1,8 @@
 <Project>
 
     <PropertyGroup>
-        <Version>1.2.3</Version>
-        <Authors>John Doe</Authors>
+        <Version>1.2.4</Version>
+        <Authors>Neil McQuillan</Authors>
     </PropertyGroup>
 
 </Project>
