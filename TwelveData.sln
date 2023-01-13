@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwelveData.Services", "TwelveData.Services\TwelveData.Services.csproj", "{8B47EB12-9757-4771-98EB-22F916A5618F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwelveData.ConsoleApp", "TwelveData.ConsoleApp\TwelveData.ConsoleApp.csproj", "{C9423C55-F8ED-4180-BBAC-6F0F028EFCBC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwelveData.IntegrationTests", "TwelveData.IntegrationTests\TwelveData.IntegrationTests.csproj", "{60AF111F-E453-4F45-B2E3-070E3996DCF7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3CB506D6-23C5-4EC7-BD7F-79C3DB0405A7}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+		.gitignore = .gitignore
+		.github\workflows\buildandrelease.yml = .github\workflows\buildandrelease.yml
+		.github\workflows\build.yml = .github\workflows\build.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8B47EB12-9757-4771-98EB-22F916A5618F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B47EB12-9757-4771-98EB-22F916A5618F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B47EB12-9757-4771-98EB-22F916A5618F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B47EB12-9757-4771-98EB-22F916A5618F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9423C55-F8ED-4180-BBAC-6F0F028EFCBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9423C55-F8ED-4180-BBAC-6F0F028EFCBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9423C55-F8ED-4180-BBAC-6F0F028EFCBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9423C55-F8ED-4180-BBAC-6F0F028EFCBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60AF111F-E453-4F45-B2E3-070E3996DCF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60AF111F-E453-4F45-B2E3-070E3996DCF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60AF111F-E453-4F45-B2E3-070E3996DCF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60AF111F-E453-4F45-B2E3-070E3996DCF7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
