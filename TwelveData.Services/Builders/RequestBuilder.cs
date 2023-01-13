@@ -32,7 +32,6 @@ namespace TwelveData.Services.Builders
             default:
                throw new ArgumentOutOfRangeException(
                   $"{nameof(enumDataSize)} is {enumDataSize.ToString()} which is not supported");
-               break;
          }
 
          return new Uri(url);
