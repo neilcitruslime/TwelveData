@@ -11,11 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwelveData.IntegrationTests
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3CB506D6-23C5-4EC7-BD7F-79C3DB0405A7}"
 	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
 		.gitignore = .gitignore
 		.github\workflows\buildandrelease.yml = .github\workflows\buildandrelease.yml
 		.github\workflows\build.yml = .github\workflows\build.yml
 		Directory.Build.props = Directory.Build.props
+		TwelveData.Services\README.md = TwelveData.Services\README.md
 	EndProjectSection
 EndProject
 Global
