@@ -12,7 +12,7 @@ using TwelveData.Services.Services;
 
 TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
 
-string apiKey = "39795d190bb84f649c9118d694ec15f8";
+string apiKey = "your key here";
 QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey,
     "AAPL",
     EnumDataSize.Compact)
