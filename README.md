@@ -1,7 +1,31 @@
 # TwelveData
 C# Project to get data from the TwelveDataApi currently supports only TimeSeries data call. 
+Includes support for API backoff when hitting rate limits (429) from TwelveData. 
 
-new TwelveDataService().GetTimeSeries(apiKey, "APPL", EnumDataSize.Compact)) // Last 30 data points
-new TwelveDataService().GetTimeSeries(apiKey, "APPL", EnumDataSize.Full)) // All data points
+#### Example Console App
+```
+
+using Microsoft.Extensions.Logging.Abstractions;
+using TwelveData.Services.Enums;
+using TwelveData.Services.Models;
+using TwelveData.Services.Services;
+
+TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
+
+string apiKey = "39795d190bb84f649c9118d694ec15f8";
+QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey,
+    "AAPL",
+    EnumDataSize.Compact)
+    .GetAwaiter()
+    .GetResult();
+
+Console.WriteLine($"Information for '{queryResult.Meta.Symbol}' on Exchange {queryResult.Meta.Exchange} with interval {queryResult.Meta.Interval}!");
+foreach (StockValueModel stockValueModel in queryResult.Values.OrderByDescending(p=>p.Datetime))
+{
+    Console.WriteLine($"\tDate {stockValueModel.Datetime.ToShortDateString()} Open {stockValueModel.Open} Close {stockValueModel.Close} High {stockValueModel.High} Low {stockValueModel.Low} Volume {stockValueModel.Volume}");
+}
+
+```
+
 
 
