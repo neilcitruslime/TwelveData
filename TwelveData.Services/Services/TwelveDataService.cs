@@ -19,7 +19,7 @@ namespace TwelveData.Services.Services
          this.logger = logger;
       }
 
-      public async Task<QueryResultsModel> GetTimeSeriesDaily(string apiKey, string symbol, EnumDataSize dataSize)
+      public async Task<QueryResultsModel> GetTimeSeriesDaily(string apiKey, string symbol, EnumDataSize dataSize, string exchange)
       {
          string body = string.Empty;
 
@@ -33,7 +33,7 @@ namespace TwelveData.Services.Services
             HttpRequestMessage request = new HttpRequestMessage
             {
                Method = HttpMethod.Get,
-               RequestUri = requestBuilder.BuildRequestTimeServiesUri(TimeSeries, apiKey, "1day", symbol, dataSize),
+               RequestUri = requestBuilder.BuildRequestTimeServiesUri(TimeSeries, apiKey, "1day", symbol, dataSize, exchange),
             };
             body = await MakeApiCall(request);
          });

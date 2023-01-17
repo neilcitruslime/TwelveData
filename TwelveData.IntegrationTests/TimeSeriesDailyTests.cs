@@ -26,7 +26,7 @@ public class TimeSeriesDailyTests : TestBase
       
       TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
 
-      QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact).GetAwaiter().GetResult();
+      QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty).GetAwaiter().GetResult();
 
       Assert.That(queryResult.Meta.Symbol, Is.EqualTo(AppleTicker));
    }
@@ -35,7 +35,7 @@ public class TimeSeriesDailyTests : TestBase
    public void CompactRecordsRetrieve()
    {
       TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
-      QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact).GetAwaiter().GetResult();
+      QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty).GetAwaiter().GetResult();
 
       Assert.That(queryResult.Values.Count, Is.EqualTo(30));
    }
@@ -44,35 +44,35 @@ public class TimeSeriesDailyTests : TestBase
    public void QuickRateLimitTest()
    {
       TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
-      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
+      twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
 
-      QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact).GetAwaiter().GetResult();
+      QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty).GetAwaiter().GetResult();
       Assert.That(queryResult.Values.Count, Is.EqualTo(30));
    }
    
@@ -80,16 +80,35 @@ public class TimeSeriesDailyTests : TestBase
    public void FullRecordsRetrieve()
    {
       TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
-      QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Full).GetAwaiter().GetResult();
+      QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Full, string.Empty).GetAwaiter().GetResult();
 
       Assert.That(queryResult.Values.Count, Is.AtLeast(1000));
+   }
+   
+   [Test]
+   public void BpNyse()
+   {
+      TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
+      QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, "BP", EnumDataSize.Compact, string.Empty).GetAwaiter().GetResult();
+       
+      Assert.That(queryResult.Meta.Exchange, Is.EqualTo("NYSE"));
+   }
+   
+   
+   [Test]
+   public void BpLse()
+   {
+      TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
+      QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, "BP", EnumDataSize.Compact, "LSE").GetAwaiter().GetResult();
+       
+      Assert.That(queryResult.Meta.Exchange, Is.EqualTo("LSE"));
    }
    
    [Test]
    public void AppleCloseSpecificDate()
    {
       TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
-      QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Full).GetAwaiter().GetResult();
+      QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Full, string.Empty).GetAwaiter().GetResult();
 
       decimal close = queryResult.Values.Where(p => p.Datetime == new DateTime(2012, 9, 14))
          .Select(p => p.Close)
@@ -101,7 +120,7 @@ public class TimeSeriesDailyTests : TestBase
    public void NasdaqFullValuesSpecificDate()
    {
       TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
-      QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, NASDAQ, EnumDataSize.Full).GetAwaiter().GetResult();
+      QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, NASDAQ, EnumDataSize.Full, string.Empty).GetAwaiter().GetResult();
 
       StockValueModel stockPrice = queryResult.Values.Where(p => p.Datetime == new DateTime(2023, 1, 11))
          .Single();
