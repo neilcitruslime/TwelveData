@@ -10,7 +10,8 @@ TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<Twelv
 string apiKey = "39795d190bb84f649c9118d694ec15f8";
 QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey,
       "AAPL",
-      EnumDataSize.Compact)
+      EnumDataSize.Compact, 
+      "NYSE")
    .GetAwaiter()
    .GetResult();
 
