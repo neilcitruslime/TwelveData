@@ -30,6 +30,22 @@ public class TimeSeriesDailyTests : TestBase
 
       Assert.That(queryResult.Meta.Symbol, Is.EqualTo(AppleTicker));
    }
+
+   [Test]
+   public void CheckThrowsOnNotASymbol()
+   {
+
+      TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
+      string notASymbol = "EXAMPLENA";
+      Assert.Throws(Is.TypeOf<Exception>()
+            .And.Message.EqualTo($"Cannot find ticker code '{notASymbol}'"),
+         () =>
+         {
+            QueryResultsModel queryResult = twelveDataService
+               .GetTimeSeriesDaily(apiKey, notASymbol, EnumDataSize.Compact, string.Empty).GetAwaiter().GetResult();
+         });
+   }
+
    
    [Test]
    public void CompactRecordsRetrieve()
