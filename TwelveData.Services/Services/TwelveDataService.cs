@@ -35,13 +35,13 @@ namespace TwelveData.Services.Services
                Method = HttpMethod.Get,
                RequestUri = requestBuilder.BuildRequestTimeServiesUri(TimeSeries, apiKey, "1day", symbol, dataSize, exchange),
             };
-            body = await MakeApiCall(request);
+            body = await MakeApiCall(request, symbol);
          });
 
          return JsonConvert.DeserializeObject<QueryResultsModel>(body);
       }
 
-      private async Task<string> MakeApiCall(HttpRequestMessage request)
+      private async Task<string> MakeApiCall(HttpRequestMessage request, string symbol)
       {
          string body;
          using (HttpResponseMessage response = await client.SendAsync(request))
@@ -53,6 +53,11 @@ namespace TwelveData.Services.Services
             if (body.Contains("\"code\":429") && body.Contains("\"status\":\"error\""))
             {
                throw new Exception("Rate Limiting Hit");
+            }
+            
+            if (body.Contains("\"code\":400") && body.ToLower().Contains("not found:"))
+            {
+               throw new Exception($"Cannot find ticker code '{symbol}'");
             }
          }
 
