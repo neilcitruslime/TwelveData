@@ -6,7 +6,10 @@ Includes support for API backoff when hitting rate limits (429) from TwelveData.
 ### Version
 
 1.2.7 Added support for the exchange parameter.
-1.2.8 Added throwing of exceptions for symbols which are not found. 
+
+1.2.8 Added throwing of exceptions for symbols which are not found.
+
+1.2.9 Added support for a simple quote method, uses TimeSeries data so will be several minutes out of date.
 
 #### Example Console App
 ```
