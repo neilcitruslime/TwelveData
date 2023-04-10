@@ -14,17 +14,28 @@ namespace TwelveData.Services.Services
 
       private const string TimeSeries = "time_series";
 
+      private static readonly string InvalidTickerError = "Cannot find ticker code";
+      private static readonly  int maxRetryAttempts = 10;
+      private static TimeSpan pauseBetweenFailures = TimeSpan.FromSeconds(60);
+
       public TwelveDataService(ILogger<TwelveDataService> logger)
       {
          this.logger = logger;
       }
 
+      public  async  Task<QueryResultsModel> Quote(string apiKey, string symbol, string exchange)
+      {
+         return await RunTimeSeriesQuery(apiKey, symbol, EnumDataSize.Quote, exchange, period: "1min");
+      }
+      
       public async Task<QueryResultsModel> GetTimeSeriesDaily(string apiKey, string symbol, EnumDataSize dataSize, string exchange)
       {
-         string body = string.Empty;
+         return await RunTimeSeriesQuery(apiKey, symbol, dataSize, exchange, period: "1day");
+      }
 
-         var maxRetryAttempts = 10;
-         var pauseBetweenFailures = TimeSpan.FromSeconds(60);
+      private async Task<QueryResultsModel> RunTimeSeriesQuery(string apiKey, string symbol, EnumDataSize dataSize, string exchange, string period)
+      {
+         string body = string.Empty;
 
          await RetryOnExceptionAsync(maxRetryAttempts, pauseBetweenFailures, async () =>
          {
@@ -33,7 +44,7 @@ namespace TwelveData.Services.Services
             HttpRequestMessage request = new HttpRequestMessage
             {
                Method = HttpMethod.Get,
-               RequestUri = requestBuilder.BuildRequestTimeServiesUri(TimeSeries, apiKey, "1day", symbol, dataSize, exchange),
+               RequestUri = requestBuilder.BuildRequestTimeServiesUri(TimeSeries, apiKey, period, symbol, dataSize, exchange),
             };
             body = await MakeApiCall(request, symbol);
          });
@@ -57,7 +68,7 @@ namespace TwelveData.Services.Services
             
             if (body.Contains("\"code\":400") && body.ToLower().Contains("not found:"))
             {
-               throw new Exception($"Cannot find ticker code '{symbol}'");
+               throw new Exception($"{InvalidTickerError} '{symbol}'");
             }
          }
 
@@ -87,7 +98,7 @@ namespace TwelveData.Services.Services
             }
             catch (TException ex)
             {
-               if (attempts == times)
+               if (attempts == times || ex.Message.Contains("Rate Limiting Hit") == false)
                   throw;
 
                await CreateDelayForException(times, attempts, delay, ex);
