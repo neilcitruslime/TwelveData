@@ -12,7 +12,7 @@ namespace TwelveData.Services.Builders
       private string uri = "https://api.twelvedata.com/{0}?apikey={1}&interval={2}&symbol={3}&exchange={4}";
 
       private string startDate = "&start_date=2001-01-01 00:00:00";
-      private string lastNRecords = "&outputsize=30";
+      private string lastNRecords = "&outputsize={0}";
 
       public Uri BuildRequestTimeServiesUri(string queryType,
          string apiKey,
@@ -30,7 +30,10 @@ namespace TwelveData.Services.Builders
          switch (enumDataSize)
          {
             case EnumDataSize.Compact:
-               url += lastNRecords;
+               url += string.Format(lastNRecords, "30");
+               break;
+            case EnumDataSize.Quote:
+               url += string.Format(lastNRecords, "1");
                break;
             case EnumDataSize.Full:
                url += startDate;

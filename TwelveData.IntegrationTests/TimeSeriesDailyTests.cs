@@ -46,6 +46,14 @@ public class TimeSeriesDailyTests : TestBase
          });
    }
 
+   [Test]
+   public void Quote()
+   {
+      TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
+      QueryResultsModel queryResult = twelveDataService.Quote(apiKey, AppleTicker,  string.Empty).GetAwaiter().GetResult();
+
+      Assert.That(queryResult.Values.Count, Is.EqualTo(1));
+   }
    
    [Test]
    public void CompactRecordsRetrieve()

@@ -14,11 +14,35 @@ namespace TwelveData.Services.Services
 
       private const string TimeSeries = "time_series";
 
+      private static readonly string InvalidTickerError = "Cannot find ticker code";
+
       public TwelveDataService(ILogger<TwelveDataService> logger)
       {
          this.logger = logger;
       }
 
+      public  async  Task<QueryResultsModel> Quote(string apiKey, string symbol, string exchange)
+      {
+         string body = string.Empty;
+
+         var maxRetryAttempts = 10;
+         var pauseBetweenFailures = TimeSpan.FromSeconds(60);
+
+         await RetryOnExceptionAsync(maxRetryAttempts, pauseBetweenFailures, async () =>
+         {
+            RequestBuilder requestBuilder = new RequestBuilder();
+
+            HttpRequestMessage request = new HttpRequestMessage
+            {
+               Method = HttpMethod.Get,
+               RequestUri = requestBuilder.BuildRequestTimeServiesUri(TimeSeries, apiKey, "1min", symbol, EnumDataSize.Quote,  exchange),
+            };
+            body = await MakeApiCall(request, symbol);
+         });
+
+         return JsonConvert.DeserializeObject<QueryResultsModel>(body);
+      }
+      
       public async Task<QueryResultsModel> GetTimeSeriesDaily(string apiKey, string symbol, EnumDataSize dataSize, string exchange)
       {
          string body = string.Empty;
@@ -57,7 +81,7 @@ namespace TwelveData.Services.Services
             
             if (body.Contains("\"code\":400") && body.ToLower().Contains("not found:"))
             {
-               throw new Exception($"Cannot find ticker code '{symbol}'");
+               throw new Exception($"{InvalidTickerError} '{symbol}'");
             }
          }
 
@@ -87,7 +111,7 @@ namespace TwelveData.Services.Services
             }
             catch (TException ex)
             {
-               if (attempts == times)
+               if (attempts == times || ex.Message.Contains("Rate Limiting Hit") == false)
                   throw;
 
                await CreateDelayForException(times, attempts, delay, ex);
