@@ -9,7 +9,7 @@ namespace TwelveData.Services.Builders
 {
    public class RequestBuilder
    {
-      private string uri = "https://api.twelvedata.com/{0}?apikey={1}&interval={2}&symbol={3}&exchange={4}";
+      private string uri = "https://api.twelvedata.com/{0}?apikey={1}&interval={2}&symbol={3}&exchange={4}&previous_close=true";
       private string symbolsUri = "https://api.twelvedata.com/{0}?apikey={1}&&symbol={2}&exchange={3}{4}";
 
       private string startDate = "&start_date=2001-01-01 00:00:00";
