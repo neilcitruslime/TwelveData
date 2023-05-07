@@ -7,20 +7,25 @@ using TwelveData.Services.Models;
 
 namespace TwelveData.Services.Services
 {
+   using Interfaces;
+
    public class TwelveDataService
    {
       private readonly ILogger<TwelveDataService> logger;
-      private static HttpClient client = new HttpClient();
+      private readonly IRetryManager retryManager;
+      private readonly HttpClient client;
 
       private const string TimeSeries = "time_series";
 
       private static readonly string InvalidTickerError = "Cannot find ticker code";
       private static readonly  int maxRetryAttempts = 10;
-      private static TimeSpan pauseBetweenFailures = TimeSpan.FromSeconds(60);
+      private static readonly TimeSpan pauseBetweenFailures = TimeSpan.FromSeconds(60);
 
-      public TwelveDataService(ILogger<TwelveDataService> logger)
+      public TwelveDataService(ILogger<TwelveDataService> logger, IRetryManager retryManager, HttpClient client)
       {
          this.logger = logger;
+         this.retryManager = retryManager;
+         this.client = client;
       }
 
       public  async  Task<QueryResultsModel> Quote(string apiKey, string symbol, string exchange)
@@ -37,7 +42,7 @@ namespace TwelveData.Services.Services
       {
          string body = string.Empty;
 
-         await RetryOnExceptionAsync(maxRetryAttempts, pauseBetweenFailures, async () =>
+         await this.retryManager.RetryOnExceptionAsync(maxRetryAttempts, pauseBetweenFailures, async () =>
          {
             RequestBuilder requestBuilder = new RequestBuilder();
 
@@ -55,7 +60,7 @@ namespace TwelveData.Services.Services
       private async Task<string> MakeApiCall(HttpRequestMessage request, string symbol)
       {
          string body;
-         using (HttpResponseMessage response = await client.SendAsync(request))
+         using (HttpResponseMessage response = await this.client.SendAsync(request))
          {
             response.EnsureSuccessStatusCode();
             body = await response.Content.ReadAsStringAsync();
@@ -74,45 +79,5 @@ namespace TwelveData.Services.Services
 
          return body;
       }
-
-      public async Task RetryOnExceptionAsync(
-         int times, TimeSpan delay, Func<Task> operation)
-      {
-         await RetryOnExceptionAsync<Exception>(times, delay, operation);
-      }
-
-      public async Task RetryOnExceptionAsync<TException>(
-         int times, TimeSpan delay, Func<Task> operation) where TException : Exception
-      {
-         if (times <= 0)
-            throw new ArgumentOutOfRangeException(nameof(times));
-
-         var attempts = 0;
-         do
-         {
-            try
-            {
-               attempts++;
-               await operation();
-               break;
-            }
-            catch (TException ex)
-            {
-               if (attempts == times || ex.Message.Contains("Rate Limiting Hit") == false)
-                  throw;
-
-               await CreateDelayForException(times, attempts, delay, ex);
-            }
-         } while (true);
-      }
-
-      private Task CreateDelayForException(
-         int times, int attempts, TimeSpan delay, Exception ex)
-      {
-         this.logger.LogWarning($"Exception on attempt {attempts} of {times}. " +
-                  "Will retry after sleeping for {delay}.", ex);
-         return Task.Delay(delay);
-      }
-
    }
 }

@@ -6,7 +6,7 @@ public abstract class TestBase
 {
    protected static IConfiguration InitConfiguration()
    {
-      var config = new ConfigurationBuilder()
+      IConfigurationRoot config = new ConfigurationBuilder()
          .AddJsonFile("appsettings.json")
          .AddJsonFile("appsettings.test.json")
          .AddEnvironmentVariables() 

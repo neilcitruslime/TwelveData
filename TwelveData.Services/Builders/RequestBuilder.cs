@@ -10,6 +10,7 @@ namespace TwelveData.Services.Builders
    public class RequestBuilder
    {
       private string uri = "https://api.twelvedata.com/{0}?apikey={1}&interval={2}&symbol={3}&exchange={4}";
+      private string symbolsUri = "https://api.twelvedata.com/{0}?apikey={1}&&symbol={2}&exchange={3}{4}";
 
       private string startDate = "&start_date=2001-01-01 00:00:00";
       private string lastNRecords = "&outputsize={0}";
@@ -43,6 +44,22 @@ namespace TwelveData.Services.Builders
                   $"{nameof(enumDataSize)} is {enumDataSize.ToString()} which is not supported");
          }
 
+         return new Uri(url);
+      }
+      
+      public Uri BuildRequestSymbolDetailsUri(string queryType,
+         string apiKey,
+         string symbol,
+         string exchange)
+      {
+         string countryQuery = string.IsNullOrEmpty(exchange) ? "&country=United%20States" : string.Empty;
+         
+         string url = string.Format(this.symbolsUri,
+            queryType,
+            apiKey,
+            symbol,
+            exchange ?? string.Empty, 
+            countryQuery);
          return new Uri(url);
       }
    }

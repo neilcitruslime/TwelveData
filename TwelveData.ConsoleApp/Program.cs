@@ -1,17 +1,19 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using Microsoft.Extensions.Logging.Abstractions;
+using TwelveData.Services.Classes;
 using TwelveData.Services.Enums;
 using TwelveData.Services.Models;
 using TwelveData.Services.Services;
 
-TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
-
 string apiKey = "39795d190bb84f649c9118d694ec15f8";
+
+TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>(), new RetryManager(new NullLogger<RetryManager>()), new HttpClient());
+
 QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey,
       "AAPL",
       EnumDataSize.Compact, 
-      "NYSE")
+      string.Empty)
    .GetAwaiter()
    .GetResult();
 
@@ -20,3 +22,19 @@ foreach (StockValueModel stockValueModel in queryResult.Values.OrderByDescending
 {
    Console.WriteLine($"\tDate {stockValueModel.Datetime.ToShortDateString()} Open {stockValueModel.Open} Close {stockValueModel.Close} High {stockValueModel.High} Low {stockValueModel.Low} Volume {stockValueModel.Volume}");
 }
+
+TwelveDataSymbolDetailsService twelveDataSymbolDetailsService = new TwelveDataSymbolDetailsService(new NullLogger<TwelveDataSymbolDetailsService>(), new RetryManager(new NullLogger<RetryManager>()), new HttpClient());
+List<SymbolDetailsModel> symbolDetailsModels = twelveDataSymbolDetailsService.GetSymbolDetails(apiKey, "AAPL", "stocks", string.Empty).GetAwaiter().GetResult();
+
+foreach (SymbolDetailsModel symbolDetailsModel in symbolDetailsModels)
+{
+   Console.WriteLine($"Symbol: {symbolDetailsModel.Symbol}\n" +
+                     $"Name: {symbolDetailsModel.Name}\n" +
+                     $"Exchange: {symbolDetailsModel.Exchange}\n" +
+                     $"Country: {symbolDetailsModel.Country}\n" +
+                     $"Type: {symbolDetailsModel.Type}\n" +
+                     $"Currency: {symbolDetailsModel.Currency} ");
+}
+
+Console.WriteLine("Press any key to exit...");
+Console.ReadKey(true);
