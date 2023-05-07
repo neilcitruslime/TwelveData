@@ -7,24 +7,27 @@ using TwelveData.Services.Services;
 
 namespace TwelveData.IntegrationTests;
 
+using Services.Classes;
+
 public class TimeSeriesDailyTests : TestBase
 {
    private const string AppleTicker = "AAPL";
    private const string FTSE100 = "FTSE";
    private const string NASDAQ = "IXIC";
    private string apiKey;
-   
+   private TwelveDataService twelveDataService;
+
    [SetUp]
    public void Setup()
    {
       this.apiKey = InitConfiguration()["TwelveDataApiKey"];
+      this.twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>(), new RetryManager(new NullLogger<RetryManager>()), new HttpClient());
    }
 
    [Test]
    public void CheckSymbol()
    {
       
-      TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
 
       QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty).GetAwaiter().GetResult();
 
@@ -34,8 +37,6 @@ public class TimeSeriesDailyTests : TestBase
    [Test]
    public void CheckThrowsOnNotASymbol()
    {
-
-      TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
       string notASymbol = "EXAMPLENA";
       Assert.Throws(Is.TypeOf<Exception>()
             .And.Message.EqualTo($"Cannot find ticker code '{notASymbol}'"),
@@ -49,7 +50,6 @@ public class TimeSeriesDailyTests : TestBase
    [Test]
    public void Quote()
    {
-      TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
       QueryResultsModel queryResult = twelveDataService.Quote(apiKey, AppleTicker,  string.Empty).GetAwaiter().GetResult();
 
       Assert.That(queryResult.Values.Count, Is.EqualTo(1));
@@ -58,7 +58,6 @@ public class TimeSeriesDailyTests : TestBase
    [Test]
    public void CompactRecordsRetrieve()
    {
-      TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
       QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty).GetAwaiter().GetResult();
 
       Assert.That(queryResult.Values.Count, Is.EqualTo(30));
@@ -67,7 +66,6 @@ public class TimeSeriesDailyTests : TestBase
    [Test]
    public void QuickRateLimitTest()
    {
-      TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
       twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
       twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
       twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty);
@@ -103,7 +101,6 @@ public class TimeSeriesDailyTests : TestBase
    [Test]
    public void FullRecordsRetrieve()
    {
-      TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
       QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Full, string.Empty).GetAwaiter().GetResult();
 
       Assert.That(queryResult.Values.Count, Is.AtLeast(1000));
@@ -112,7 +109,6 @@ public class TimeSeriesDailyTests : TestBase
    [Test]
    public void BpNyse()
    {
-      TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
       QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, "BP", EnumDataSize.Compact, string.Empty).GetAwaiter().GetResult();
        
       Assert.That(queryResult.Meta.Exchange, Is.EqualTo("NYSE"));
@@ -122,7 +118,6 @@ public class TimeSeriesDailyTests : TestBase
    [Test]
    public void BpLse()
    {
-      TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
       QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, "BP", EnumDataSize.Compact, "LSE").GetAwaiter().GetResult();
        
       Assert.That(queryResult.Meta.Exchange, Is.EqualTo("LSE"));
@@ -131,7 +126,6 @@ public class TimeSeriesDailyTests : TestBase
    [Test]
    public void AppleCloseSpecificDate()
    {
-      TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
       QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Full, string.Empty).GetAwaiter().GetResult();
 
       decimal close = queryResult.Values.Where(p => p.Datetime == new DateTime(2012, 9, 14))
@@ -143,11 +137,10 @@ public class TimeSeriesDailyTests : TestBase
    [Test]
    public void NasdaqFullValuesSpecificDate()
    {
-      TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>());
       QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, NASDAQ, EnumDataSize.Full, string.Empty).GetAwaiter().GetResult();
 
-      StockValueModel stockPrice = queryResult.Values.Where(p => p.Datetime == new DateTime(2023, 1, 11))
-         .Single();
+      StockValueModel stockPrice = queryResult.Values
+         .Single(p => p.Datetime == new DateTime(2023, 1, 11));
       
       Assert.That(Math.Round(stockPrice.Close, 2), Is.EqualTo(10931.67M));
       Assert.That(Math.Round(stockPrice.Low, 2), Is.EqualTo(10762.73M));
