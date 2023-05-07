@@ -26,11 +26,11 @@ jobs:
 
       - name: Publish to GitHub packages
         run: dotnet nuget push /home/runner/work/TwelveData/TwelveData.Services/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate`
-#      - name: publish on version change
-#        id: publish_nuget
-#        uses: brandedoutcast/publish-nuget@v2
-#        with:
-#            # Filepath of the project to be packaged, relative to root of repository
-#            PROJECT_FILE_PATH: TwelveData.Services/TwelveData.Services.csproj
-#            VERSION_FILE_PATH: Directory.Build.props
-#            NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+      - name: publish on version change
+        id: publish_nuget
+        uses: brandedoutcast/publish-nuget@v2
+        with:
+            # Filepath of the project to be packaged, relative to root of repository
+            PROJECT_FILE_PATH: TwelveData.Services/TwelveData.Services.csproj
+            VERSION_FILE_PATH: Directory.Build.props
+            NUGET_KEY: ${{secrets.NUGET_API_KEY}}
