@@ -20,7 +20,7 @@ QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey,
 Console.WriteLine($"Information for '{queryResult.Meta.Symbol}' on Exchange {queryResult.Meta.Exchange} with interval {queryResult.Meta.Interval}!");
 foreach (StockValueModel stockValueModel in queryResult.Values.OrderByDescending(p=>p.Datetime))
 {
-   Console.WriteLine($"\tDate {stockValueModel.Datetime.ToShortDateString()} Open {stockValueModel.Open} Close {stockValueModel.Close} High {stockValueModel.High} Low {stockValueModel.Low} Volume {stockValueModel.Volume}");
+   Console.WriteLine($"\tDate {stockValueModel.Datetime.ToShortDateString()} Open {stockValueModel.Open} Close {stockValueModel.Close} High {stockValueModel.High} Low {stockValueModel.Low} Volume {stockValueModel.Volume} GainToday {stockValueModel.GainToday} Previvous Close {stockValueModel.PreviousClose}");
 }
 
 TwelveDataSymbolDetailsService twelveDataSymbolDetailsService = new TwelveDataSymbolDetailsService(new NullLogger<TwelveDataSymbolDetailsService>(), new RetryManager(new NullLogger<RetryManager>()), new HttpClient());
