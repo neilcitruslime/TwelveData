@@ -4,9 +4,11 @@ Includes support for API backoff when hitting rate limits (429) from TwelveData.
 
 
 ### Version
+1.3.2 Added support for indices details endpoints to SymbolDetailsService.
+
 1.3.1 Added support for GainToday and PrevivousClose
 
-1.3 Added support for equities and ETF endpoints.
+1.3 Added support for equities and ETF details endpoints.
 
 1.2.9 Added support for a simple quote method, uses TimeSeries data so will be several minutes out of date.
 
