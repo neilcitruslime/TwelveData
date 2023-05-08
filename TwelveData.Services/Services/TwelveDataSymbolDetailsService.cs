@@ -24,7 +24,7 @@ public class TwelveDataSymbolDetailsService
    
    public async Task<List<SymbolDetailsModel>> GetSymbolDetails(string apiKey, string symbol, string queryType, string exchange)
    {
-      if (queryType == null || queryType.ToLower() != "etf" && queryType.ToLower() != "stocks")
+      if (queryType == null || queryType.ToLower() != "etf" && queryType.ToLower() != "stocks" && queryType.ToLower() != "indices")
       {
          throw new ArgumentOutOfRangeException(nameof(queryType), "Query type must be either 'etf' or 'stock'");
       }
@@ -50,6 +50,11 @@ public class TwelveDataSymbolDetailsService
          container.SymbolsDetails.ForEach(x => x.Type = "ETF");
       }
 
+      if (queryType.ToLower() == "indices")
+      {
+         container.SymbolsDetails.ForEach(x => x.Type = "Indices");
+      }
+      
       return container.SymbolsDetails;
    }
 

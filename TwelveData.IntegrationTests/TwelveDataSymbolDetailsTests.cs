@@ -65,8 +65,49 @@ public class TwelveDataSymbolDetailsTests : TestBase
       Assert.That(symbols[0].Currency, Is.EqualTo("USD"));
       Assert.That(symbols[0].Type, Is.EqualTo("ETF"));
    }
-
    [Test]
+   public void GetNasdaqIndex()
+   {
+         List<SymbolDetailsModel> symbols = this.twelveDataSymbolDetailsService.GetSymbolDetails(this.apiKey, "IXIC", "indices", "").GetAwaiter().GetResult();
+         Assert.That(symbols.Count, Is.EqualTo(1));
+         Assert.That(symbols[0].Symbol, Is.EqualTo("IXIC"));
+         Assert.That(symbols[0].Name, Is.EqualTo("NASDAQ Composite"));
+         Assert.That(symbols[0].Exchange, Is.EqualTo("NASDAQ"));
+         Assert.That(symbols[0].Country, Is.EqualTo("United States"));
+         Assert.That(symbols[0].Currency, Is.EqualTo("USD"));
+         Assert.That(symbols[0].Type, Is.EqualTo("Indices"));
+   }
+   
+   [Test]
+   public void GetFTSE100Index()
+   {
+      List<SymbolDetailsModel> symbols = this.twelveDataSymbolDetailsService.GetSymbolDetails(this.apiKey, "FTSE", "indices", "LSE").GetAwaiter().GetResult();
+      Assert.That(symbols.Count, Is.EqualTo(1));
+      Assert.That(symbols[0].Symbol, Is.EqualTo("FTSE"));
+      Assert.That(symbols[0].Name, Is.EqualTo("FTSE 100"));
+      Assert.That(symbols[0].Exchange, Is.EqualTo("LSE"));
+      Assert.That(symbols[0].Country, Is.EqualTo("United Kingdom"));
+      Assert.That(symbols[0].Currency, Is.EqualTo("GBP"));
+      Assert.That(symbols[0].Type, Is.EqualTo("Indices"));
+   
+   }
+   
+   [Test]
+   public void GetFTSE250Index()
+   {
+      List<SymbolDetailsModel> symbols = this.twelveDataSymbolDetailsService.GetSymbolDetails(this.apiKey, "FTMC", "indices", "LSE").GetAwaiter().GetResult();
+      Assert.That(symbols.Count, Is.EqualTo(1));
+      Assert.That(symbols[0].Symbol, Is.EqualTo("FTMC"));
+      Assert.That(symbols[0].Name, Is.EqualTo("FTSE 250"));
+      Assert.That(symbols[0].Exchange, Is.EqualTo("LSE"));
+      Assert.That(symbols[0].Country, Is.EqualTo("United Kingdom"));
+      Assert.That(symbols[0].Currency, Is.EqualTo("GBP"));
+      Assert.That(symbols[0].Type, Is.EqualTo("Indices"));
+   
+   }
+
+   
+   [Test]   
    public void GetIsfEtfTicker()
    {
       List<SymbolDetailsModel> symbols = this.twelveDataSymbolDetailsService.GetSymbolDetails(this.apiKey, "ISF", "etf", "LSE").GetAwaiter().GetResult();
