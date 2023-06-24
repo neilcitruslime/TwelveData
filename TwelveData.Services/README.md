@@ -4,6 +4,8 @@ Includes support for API backoff when hitting rate limits (429) from TwelveData.
 
 
 ### Version
+1.3.3 Bug fix on exception message 
+
 1.3.2 Added support for indices details endpoints to SymbolDetailsService.
 
 1.3.1 Added support for GainToday and PrevivousClose

@@ -56,6 +56,31 @@ public class TimeSeriesDailyTests : TestBase
    }
    
    [Test]
+   public void QuoteFtse()
+   {
+      QueryResultsModel queryResult = twelveDataService.Quote(apiKey, "FTSE",  "LSE").GetAwaiter().GetResult();
+
+      Assert.That(queryResult.Values.Count, Is.EqualTo(1));
+   }
+
+   [Test]
+   public void QuoteNasdaq()
+   {
+      QueryResultsModel queryResult = twelveDataService.Quote(apiKey, "IXIC",  "").GetAwaiter().GetResult();
+
+      Assert.That(queryResult.Values.Count, Is.EqualTo(1));
+   }
+   
+   [Test]
+   public void QuoteSpx()
+   {
+      QueryResultsModel queryResult = twelveDataService.Quote(apiKey, "SPX",  "").GetAwaiter().GetResult();
+
+      Assert.That(queryResult.Values.Count, Is.EqualTo(1));
+   }
+
+   
+   [Test]
    public void CompactRecordsRetrieve()
    {
       QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, AppleTicker, EnumDataSize.Compact, string.Empty).GetAwaiter().GetResult();

@@ -26,7 +26,7 @@ public class TwelveDataSymbolDetailsService
    {
       if (queryType == null || queryType.ToLower() != "etf" && queryType.ToLower() != "stocks" && queryType.ToLower() != "indices")
       {
-         throw new ArgumentOutOfRangeException(nameof(queryType), "Query type must be either 'etf' or 'stock'");
+         throw new ArgumentOutOfRangeException(nameof(queryType), "Query type must be either 'etf', 'stock' or 'indices'");
       }
 
       string body = string.Empty;
