@@ -179,6 +179,6 @@ public class TimeSeriesDailyTests : TestBase
    {
       QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, "N225", EnumDataSize.Full, "JPX").GetAwaiter().GetResult();
 
-      Assert.That(queryResult.Values.Any() == false);
+      Assert.That(queryResult.Values == null);
    }
 }
