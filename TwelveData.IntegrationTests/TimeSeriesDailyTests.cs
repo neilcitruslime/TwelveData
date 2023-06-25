@@ -172,4 +172,13 @@ public class TimeSeriesDailyTests : TestBase
       Assert.That(Math.Round(stockPrice.High, 2), Is.EqualTo(10932.44M));
       Assert.That(Math.Round(stockPrice.Open, 2), Is.EqualTo(10794.99M));
    }
+   
+   // No license for this data
+   [Test]
+   public void Nikkei225()
+   {
+      QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey, "N225", EnumDataSize.Full, "JPX").GetAwaiter().GetResult();
+
+      Assert.That(queryResult.Values.Any() == false);
+   }
 }
