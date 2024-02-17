@@ -8,9 +8,9 @@ using TwelveData.Services.Services;
 
 string apiKey = "39795d190bb84f649c9118d694ec15f8";
 
-TwelveDataService twelveDataService = new TwelveDataService(new NullLogger<TwelveDataService>(), new RetryManager(new NullLogger<RetryManager>()), new HttpClient());
+TwelveDataServiceService twelveDataServiceService = new TwelveDataServiceService(new NullLogger<TwelveDataServiceService>(), new RetryManager(new NullLogger<RetryManager>()), new HttpClient());
 
-QueryResultsModel queryResult = twelveDataService.GetTimeSeriesDaily(apiKey,
+QueryResultsModel queryResult = twelveDataServiceService.GetTimeSeriesDaily(apiKey,
       "AAPL",
       EnumDataSize.Compact, 
       string.Empty)

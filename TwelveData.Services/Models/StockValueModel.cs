@@ -16,12 +16,12 @@ namespace TwelveData.Services.Models
       [JsonProperty("close")] public decimal Close { get; set; }
 
       [JsonProperty("volume")]
-      [Newtonsoft.Json.JsonConverter(typeof(ParseStringConverter))]
+      [JsonConverter(typeof(ParseStringConverter))]
       public long Volume { get; set; }
       
       [JsonProperty("previous_close")] 
       public decimal PreviousClose { get; set; }
       
-      public decimal GainToday => Close - PreviousClose;
+      public decimal GainToday => this.Close - this.PreviousClose;
    }
 }

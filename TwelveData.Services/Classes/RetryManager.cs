@@ -14,7 +14,7 @@ public class RetryManager : IRetryManager
    public async Task RetryOnExceptionAsync(
       int times, TimeSpan delay, Func<Task> operation)
    {
-      await RetryOnExceptionAsync<Exception>(times, delay, operation);
+      await this.RetryOnExceptionAsync<Exception>(times, delay, operation);
    }
 
    private async Task RetryOnExceptionAsync<TException>(
@@ -37,7 +37,7 @@ public class RetryManager : IRetryManager
             if (attempts == times || ex.Message.Contains("Rate Limiting Hit") == false)
                throw;
 
-            await CreateDelayForException(times, attempts, delay, ex);
+            await this.CreateDelayForException(times, attempts, delay, ex);
          }
       } while (true);
    }

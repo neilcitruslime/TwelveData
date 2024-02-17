@@ -40,7 +40,7 @@ public class TwelveDataSymbolDetailsService
             Method = HttpMethod.Get,
             RequestUri = requestBuilder.BuildRequestSymbolDetailsUri(queryType, apiKey, symbol, exchange),
          };
-         body = await MakeApiCall(request, symbol);
+         body = await this.MakeApiCall(request, symbol);
       });
 
       SymbolDetailsModelContainer container = JsonConvert.DeserializeObject<SymbolDetailsModelContainer>(body);
