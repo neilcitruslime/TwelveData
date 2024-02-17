@@ -26,7 +26,7 @@ public class TwelveDataSymbolDetailsService
    {
       if (queryType == null || queryType.ToLower() != "etf" && queryType.ToLower() != "stocks" && queryType.ToLower() != "indices")
       {
-         throw new ArgumentOutOfRangeException(nameof(queryType), "Query type must be either 'etf' or 'stock'");
+         throw new ArgumentOutOfRangeException(nameof(queryType), "Query type must be either 'etf', 'stock' or 'indices'");
       }
 
       string body = string.Empty;
@@ -40,7 +40,7 @@ public class TwelveDataSymbolDetailsService
             Method = HttpMethod.Get,
             RequestUri = requestBuilder.BuildRequestSymbolDetailsUri(queryType, apiKey, symbol, exchange),
          };
-         body = await MakeApiCall(request, symbol);
+         body = await this.MakeApiCall(request, symbol);
       });
 
       SymbolDetailsModelContainer container = JsonConvert.DeserializeObject<SymbolDetailsModelContainer>(body);

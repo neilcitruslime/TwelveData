@@ -31,13 +31,13 @@ namespace TwelveData.Services.Builders
          switch (enumDataSize)
          {
             case EnumDataSize.Compact:
-               url += string.Format(lastNRecords, "30");
+               url += string.Format(this.lastNRecords, "30");
                break;
             case EnumDataSize.Quote:
-               url += string.Format(lastNRecords, "1");
+               url += string.Format(this.lastNRecords, "1");
                break;
             case EnumDataSize.Full:
-               url += startDate;
+               url += this.startDate;
                break;
             default:
                throw new ArgumentOutOfRangeException(

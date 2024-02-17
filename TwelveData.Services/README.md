@@ -4,6 +4,12 @@ Includes support for API backoff when hitting rate limits (429) from TwelveData.
 
 
 ### Version
+1.4 Added support for getting equities and ETFs by exchange.
+
+
+
+1.3.3 Bug fix on exception message 
+
 1.3.2 Added support for indices details endpoints to SymbolDetailsService.
 
 1.3.1 Added support for GainToday and PrevivousClose
@@ -18,6 +24,14 @@ Includes support for API backoff when hitting rate limits (429) from TwelveData.
 
 ### Example Console App
 
+#### Get a list of Eqities and ETFs by exchange
+
+```C#
+TwelveDataServiceEquitiesAndETFs twelveDataServiceEquitiesAndEtFs;
+
+twelveDataServiceEquitiesAndEtFs = new TwelveDataServiceEquitiesAndETFs(new NullLogger<TwelveDataServiceEquitiesAndETFs>(), new RetryManager(new NullLogger<RetryManager>()), new HttpClient());
+List<SymbolDetailsModel> stockList = twelveDataServiceEquitiesAndEtFs.GetEquities(this.apiKey, "LSE", "UK", "Common Stock").GetAwaiter().GetResult();
+List<SymbolDetailsModel> etfList = twelveDataServiceEquitiesAndEtFs.GetEtfs(this.apiKey, "NYSE", "US").GetAwaiter().GetResult();
 
 #### Getting time series data
 
